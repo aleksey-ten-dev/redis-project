@@ -1,0 +1,40 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: demo-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - demo-redis-net
+
+  redis-insight:
+    image: redis/redisinsight:latest
+    container_name: demo-redis-insight
+    ports:
+      - "5540:5540"
+    volumes:
+      - redis-insight:/data
+    networks:
+      - demo-redis-net
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: demo
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U keycloak" ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  redis-insight:
+
+networks:
+  demo-redis-net:
+    driver: bridge
