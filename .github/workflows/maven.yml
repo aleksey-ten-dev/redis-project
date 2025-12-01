@@ -6,8 +6,12 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+# добавить job на тестирование
+# docker hub
 
+name: Java CI with Maven
+env:
+  REDIS_PORT: ${{ secrets.REDIS_PORT }}
 on:
   push:
     branches: [ "main" ]

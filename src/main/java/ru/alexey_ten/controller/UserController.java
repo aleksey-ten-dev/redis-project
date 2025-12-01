@@ -23,6 +23,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
+    @GetMapping("/hello")
+    public ResponseEntity<String> hello() {
+        return ResponseEntity.ok("hello");
+    }
+
+
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody User user) {
         userService.updateUser(user);
